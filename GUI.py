@@ -1,3 +1,4 @@
+from tools import *
 import pandas as pd
 import tkinter.messagebox
 from tkinter import *
@@ -46,6 +47,9 @@ class atm:
             self.txtRecipt.insert(END, '\nSet Your PIN Number:')
             self.txtRecipt.insert(END, '\nEnter Your Phone Number:')
             self.txtRecipt.insert(END, '\nEnter Your Frist Deposit Amount :')
+
+        def CurrentEntry():
+            pass
 
 
 #============================Numbers============================================#
@@ -100,7 +104,7 @@ class atm:
             self.txtRecipt.delete("1.0", END)
 
         def submit1():
-            AccNo_var = StringVar()
+            AccNo_var = IntVar()
             PIN_var = IntVar()
 
             AccNo = AccNo_var.get()
@@ -109,15 +113,17 @@ class atm:
             AccNo_var.set("")
             PIN_var.set("")
 
-            AccNo_label = Label(root, text='Enter Your Account Number :', font=('arial', 10, 'bold'))
-            AccNo_entry = Entry(root, textvariable=AccNo_var, font=('arial', 10, 'normal'))
-            PIN_label = Label(root, text='Enter Your PIN Number :', font=('arial', 10, 'bold'))
-            PIN_entry = Entry(root, textvariable=PIN_var, font=('arial', 10, 'normal'), show='*')
+            AccNo_label = Label(TopFrame2Mid, text='Enter Account Number :', font=('arial', 10, 'bold'))
+            AccNo_entry = Entry(TopFrame2Mid, textvariable=AccNo_var, font=('arial', 10, 'normal'))
+            PIN_label = Label(TopFrame2Mid, text='Enter PIN Number :', font=('arial', 10, 'bold'))
+            PIN_entry = Entry(TopFrame2Mid, textvariable=PIN_var, font=('arial', 10, 'normal'), show='*')
 
-            AccNo_label.grid(row=0, column=0)
-            AccNo_entry.grid(row=0, column=1)
-            PIN_label.grid(row=1, column=0)
-            PIN_entry.grid(row=1, column=1)
+            AccNo_label.place(x=20, y=30)
+            AccNo_entry.place(x=20, y=60)
+
+            PIN_label.place(x=20, y=100)
+            PIN_entry.place(x=20, y=130)
+
 
 
 #=======================CenterScreen(Widgets)===================================#
@@ -221,9 +227,14 @@ class atm:
 if __name__=='__main__':
     root = Tk()
     application = atm(root)
+
+
+
     root.mainloop()
 
 #self.txtRecipt.insert(END, '\nWithdraw :-' + "\n\n\n\n\n")
 #self.txtRecipt.insert(END, 'Check Balance :-' + "\n\n\n\n\n")
 #self.txtRecipt.insert(END, 'Deposit :-' + "\n\n\n\n\n")
 #self.txtRecipt.insert(END, 'Set New PIN Number :-')
+
+
