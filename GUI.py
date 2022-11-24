@@ -36,19 +36,20 @@ class atm:
 
 #============================Functions==========================================#
 
-        def DestroyOldWidgets():
-            if(self.screen == "login or register"):
+        def DestroyWidgets():
+            if(self.screen == "welcome"):
                 self.WelcomeMSG_Main.destroy()
                 self.WelcomeMSG_Sub.destroy()
-            elif(self.screen == "login"):
+            elif(self.screen == "login or register"):
                 self.login_label.destroy()
                 self.register_label.destroy()
                 self.dummytext1.destroy()
                 self.dummytext2.destroy()
+            
 
         def start():
+            DestroyWidgets()
             self.screen = "login or register"
-            DestroyOldWidgets()
 
             self.login_label = Label(TopFrame2Mid, text="Login", font=('arial', 20, 'bold'))
             self.login_label.place(x=15, y=15)
@@ -61,14 +62,6 @@ class atm:
 
             self.dummytext2 = Label(TopFrame2Mid, text="Dummy Text 2", font=('arial', 20, 'bold'))
             self.dummytext2.place(x=15, y=225)
-
-        def btnltra():
-            # cls()
-            submit1()
-
-        def btnrana():
-            # cls()
-            pass
 
         def CurrentEntry():
             widgetSelected = str(root.focus_get()).split('.')[-1][1:]
@@ -95,25 +88,37 @@ class atm:
                 self.root.destroy()
                 return
 
-        def submit1():
-            self.screen = "login"
-            DestroyOldWidgets()
+        def arrow(num):
+            match(num):
+                case 1:
+                    if(self.screen == "login or register"):
+                        DestroyWidgets()
+                        self.screen = "login"
 
-            self.AccNo_label = Label(TopFrame2Mid, text='Enter Account Number :', font=('arial', 10, 'bold'))
-            self.AccNo_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
-            self.PIN_label = Label(TopFrame2Mid, text='Enter PIN Number :', font=('arial', 10, 'bold'))
-            self.PIN_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+                        self.AccNo_label = Label(TopFrame2Mid, text='Enter Account Number :', font=('arial', 10, 'bold'))
+                        self.AccNo_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+                        self.PIN_label = Label(TopFrame2Mid, text='Enter PIN Number :', font=('arial', 10, 'bold'))
+                        self.PIN_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
 
-            self.AccNo_label.place(x=15, y=15)
-            self.AccNo_entry.place(x=15, y=40)
+                        self.AccNo_label.place(x=15, y=15)
+                        self.AccNo_entry.place(x=15, y=40)
 
-            self.PIN_label.place(x=15, y=85)
-            self.PIN_entry.place(x=15, y=110)
+                        self.PIN_label.place(x=15, y=85)
+                        self.PIN_entry.place(x=15, y=110)
+                    if(self.screen == "user"):
+                        pass
+                case 2:
+                    if(self.screen == "login or register"):
+                        DestroyWidgets()
+                        self.screen = "register"
+
+                        pass
+
 
 #===============================================================================#
 
         # "welcome", "login or register", "login", "user"
-        self.screen = "Welcome"
+        self.screen = "welcome"
 
 #=======================CenterScreen(Widgets)===================================#
 
@@ -134,10 +139,10 @@ class atm:
         self.img_ArrowL = PhotoImage(file= "resources/images/LeftArrow.png")
 
         # Left Arrow Buttons
-        self.btnArrowL1=Button(TopFrame2Left, width=120, height=60, state=NORMAL,command= btnltra, image=self.img_ArrowL).grid(row=0, column=0, padx=2, pady=2)
-        self.btnArrowL2 = Button(TopFrame2Left, width=120, height=60, state=NORMAL,command= btnrana, image=self.img_ArrowL).grid(row=1, column=0, padx=2, pady=2)
-        self.btnArrowL3 = Button(TopFrame2Left, width=120, height=60, state=NORMAL, image=self.img_ArrowL).grid(row=2, column=0, padx=2, pady=2)
-        self.btnArrowL4=Button(TopFrame2Left, width=120, height=60, state=NORMAL, image=self.img_ArrowL).grid(row=3, column=0, padx=2, pady=2)
+        self.btnArrow1 = Button(TopFrame2Left, width=120, height=60, state=NORMAL, command= lambda: arrow(1), image=self.img_ArrowL).grid(row=0, column=0, padx=2, pady=2)
+        self.btnArrow2 = Button(TopFrame2Left, width=120, height=60, state=NORMAL, command= lambda: arrow(2), image=self.img_ArrowL).grid(row=1, column=0, padx=2, pady=2)
+        self.btnArrow3 = Button(TopFrame2Left, width=120, height=60, state=NORMAL, command= lambda: arrow(3), image=self.img_ArrowL).grid(row=2, column=0, padx=2, pady=2)
+        self.btnArrow4 = Button(TopFrame2Left, width=120, height=60, state=NORMAL, command= lambda: arrow(4), image=self.img_ArrowL).grid(row=3, column=0, padx=2, pady=2)
 
 #==========================RightArrow(Widgets)==================================#
 
@@ -145,10 +150,10 @@ class atm:
         self.img_ArrowR = PhotoImage(file= "resources/images/RightArrow.png")
 
         # Right Arrow Buttons
-        self.btnArrowR1=Button(TopFrame2Right, width=120, height=60, state=NORMAL, image=self.img_ArrowR).grid(row=0, column=0, padx=2, pady=2)
-        self.btnArrowR2 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, image=self.img_ArrowR).grid(row=1, column=0, padx=2, pady=2)
-        self.btnArrowR3 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, image=self.img_ArrowR).grid(row=2, column=0, padx=2, pady=2)
-        self.btnArrowR4=Button(TopFrame2Right, width=120, height=60, state=NORMAL, image=self.img_ArrowR).grid(row=3, column=0, padx=2, pady=2)
+        self.btnArrow5 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: arrow(5), image=self.img_ArrowR).grid(row=0, column=0, padx=2, pady=2)
+        self.btnArrow6 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: arrow(6), image=self.img_ArrowR).grid(row=1, column=0, padx=2, pady=2)
+        self.btnArrow7 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: arrow(7), image=self.img_ArrowR).grid(row=2, column=0, padx=2, pady=2)
+        self.btnArrow8 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: arrow(8), image=self.img_ArrowR).grid(row=3, column=0, padx=2, pady=2)
 
 #=============================Number Pad(Widgets)===============================#
 
@@ -159,7 +164,7 @@ class atm:
         self.img_CANCEL = PhotoImage(file="resources/images/Cancel.png")
 
         # Row 1 Buttons
-        self.btn_1=Button(TopFrame1, width=160, height=60, command= lambda: insert(1), image=self.img_1).grid(row=2, column=0, padx=6, pady=4)
+        self.btn_1 = Button(TopFrame1, width=160, height=60, command= lambda: insert(1), image=self.img_1).grid(row=2, column=0, padx=6, pady=4)
         self.btn_2 = Button(TopFrame1, width=160, height=60, command= lambda: insert(2), image=self.img_2).grid(row=2, column=1, padx=6, pady=4)
         self.btn_3 = Button(TopFrame1, width=160, height=60, command= lambda: insert(3), image=self.img_3).grid(row=2, column=2, padx=6, pady=4)
         self.btn_CANCEL = Button(TopFrame1, width=160, height=60, command=cancel, image=self.img_CANCEL).grid(row=2, column=3, padx=6, pady=4)
