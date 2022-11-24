@@ -9,7 +9,7 @@ class atm:
         self.root = root
         blank_space = " "
         self.root.title(110 * blank_space + "ATM System")
-        self.root.geometry('790x706+580+140')
+        self.root.geometry('790x654+580+140')
         self.root.configure(background ='yellow')
 
 #=================================Frame=========================================#
@@ -36,30 +36,48 @@ class atm:
 
 #============================Functions==========================================#
 
+        def DestroyOldWidgets():
+            if(self.screen == "login or register"):
+                self.WelcomeMSG_Main.destroy()
+                self.WelcomeMSG_Sub.destroy()
+            elif(self.screen == "login"):
+                self.login_label.destroy()
+                self.register_label.destroy()
+                self.dummytext1.destroy()
+                self.dummytext2.destroy()
+
         def start():
-            self.txtRecipt.insert(END, '\n\nLogin To Registered account :-' + "\n\n\n\n")
-            self.txtRecipt.insert(END, 'Register A New Account:- ' + "\n\n\n\n")
+            self.screen = "login or register"
+            DestroyOldWidgets()
+
+            self.login_label = Label(TopFrame2Mid, text="Login", font=('arial', 20, 'bold'))
+            self.login_label.place(x=15, y=15)
+
+            self.register_label = Label(TopFrame2Mid, text="Register", font=('arial', 20, 'bold'))
+            self.register_label.place(x=15, y=85)
+
+            self.dummytext1 = Label(TopFrame2Mid, text="Dummy Text 1", font=('arial', 20, 'bold'))
+            self.dummytext1.place(x=15, y=155)
+
+            self.dummytext2 = Label(TopFrame2Mid, text="Dummy Text 2", font=('arial', 20, 'bold'))
+            self.dummytext2.place(x=15, y=225)
 
         def btnltra():
-            cls()
+            # cls()
             submit1()
 
         def btnrana():
-            cls()
-            self.txtRecipt.insert(END, '\nEnter Your Name :')
-            self.txtRecipt.insert(END, '\nEnter Your Account Number:')
-            self.txtRecipt.insert(END, '\nSet Your PIN Number:')
-            self.txtRecipt.insert(END, '\nEnter Your Phone Number:')
-            self.txtRecipt.insert(END, '\nEnter Your Frist Deposit Amount :')
+            # cls()
+            pass
 
         def CurrentEntry():
             widgetSelected = str(root.focus_get()).split('.')[-1][1:]
             # print(widgetSelected)
 
             if(widgetSelected == "entry"):
-                return AccNo_entry
+                return self.AccNo_entry
             if (widgetSelected == "entry2"):
-                return PIN_entry
+                return self.PIN_entry
 
 #============================Numbers============================================#
 
@@ -77,38 +95,38 @@ class atm:
                 self.root.destroy()
                 return
 
-        # Only for txtRecipt
-        def cls():
-            self.txtRecipt.delete("1.0", END)
-
         def submit1():
-            global AccNo_entry
-            global PIN_entry
+            self.screen = "login"
+            DestroyOldWidgets()
 
-            AccNo_var = IntVar()
-            PIN_var = IntVar()
+            self.AccNo_label = Label(TopFrame2Mid, text='Enter Account Number :', font=('arial', 10, 'bold'))
+            self.AccNo_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+            self.PIN_label = Label(TopFrame2Mid, text='Enter PIN Number :', font=('arial', 10, 'bold'))
+            self.PIN_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
 
-            AccNo = AccNo_var.get()
-            PIN = PIN_var.get()
+            self.AccNo_label.place(x=15, y=15)
+            self.AccNo_entry.place(x=15, y=40)
 
-            AccNo_label = Label(TopFrame2Mid, text='Enter Account Number :', font=('arial', 10, 'bold'))
-            AccNo_entry = Entry(TopFrame2Mid, textvariable=AccNo_var, font=('arial', 10, 'normal'))
-            PIN_label = Label(TopFrame2Mid, text='Enter PIN Number :', font=('arial', 10, 'bold'))
-            PIN_entry = Entry(TopFrame2Mid, textvariable=PIN_var, font=('arial', 10, 'normal'))
+            self.PIN_label.place(x=15, y=85)
+            self.PIN_entry.place(x=15, y=110)
 
-            AccNo_label.place(x=20, y=30)
-            AccNo_entry.place(x=20, y=60)
+#===============================================================================#
 
-            PIN_label.place(x=20, y=100)
-            PIN_entry.place(x=20, y=130)
-
-
+        # "welcome", "login or register", "login", "user"
+        self.screen = "Welcome"
 
 #=======================CenterScreen(Widgets)===================================#
 
-        # Main Text Widget
-        self.txtRecipt = Text(TopFrame2Mid, height = 17, width = 42, bd=12, font=('arial',11,'bold'))
-        self.txtRecipt.grid(row=0,column=0)
+        # 400 x 275
+        self.img_atm_background = PhotoImage(file="resources/images/background.png")
+        self.atm_background = Label(TopFrame2Mid, image=self.img_atm_background)
+        self.atm_background.grid(row=0, column=0)
+
+        self.WelcomeMSG_Main = Label(TopFrame2Mid, text="WELCOME TO ATM", font=('arial', 20, 'bold'))
+        self.WelcomeMSG_Main.place(x=70, y=20)
+
+        self.WelcomeMSG_Sub = Label(TopFrame2Mid, text="Press start to continue", font=('arial', 10, 'normal'))
+        self.WelcomeMSG_Sub.place(x=130, y=60)
 
 #=============================LeftArrow(Widgets)================================#
 
