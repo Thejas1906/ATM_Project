@@ -9,7 +9,7 @@ class atm:
         self.root = root
         blank_space = " "
         self.root.title(110 * blank_space + "ATM System")
-        self.root.geometry('790x760+280+0')
+        self.root.geometry('790x706+580+140')
         self.root.configure(background ='yellow')
 
 #=================================Frame=========================================#
@@ -54,7 +54,7 @@ class atm:
 
         def CurrentEntry():
             widgetSelected = str(root.focus_get()).split('.')[-1][1:]
-            print(widgetSelected)
+            # print(widgetSelected)
 
             if(widgetSelected == "entry"):
                 return AccNo_entry
@@ -138,7 +138,7 @@ class atm:
         self.img_1 = PhotoImage(file="resources/images/NumOne.png")
         self.img_2 = PhotoImage(file="resources/images/NumTwo.png")
         self.img_3 = PhotoImage(file="resources/images/NumThree.png")
-        self.img_CANCEL = PhotoImage(file="resources/images/test1.png")
+        self.img_CANCEL = PhotoImage(file="resources/images/Cancel.png")
 
         # Row 1 Buttons
         self.btn_1=Button(TopFrame1, width=160, height=60, command= lambda: insert(1), image=self.img_1).grid(row=2, column=0, padx=6, pady=4)
@@ -152,7 +152,7 @@ class atm:
         self.img_4 = PhotoImage(file="resources/images/NumFour.png")
         self.img_5 = PhotoImage(file="resources/images/NumFive.png")
         self.img_6 = PhotoImage(file="resources/images/NumSix.png")
-        self.img_CLEAR = PhotoImage(file="resources/images/test1.png")
+        self.img_CLEAR = PhotoImage(file="resources/images/Clear.png")
 
         # Row 2 Buttons
         self.btn_4 = Button(TopFrame1, width=160, height=60, command= lambda: insert(4), image=self.img_4).grid(row=3, column=0, padx=6, pady=4)
@@ -166,7 +166,7 @@ class atm:
         self.img_7 = PhotoImage(file="resources/images/NumSeven.png")
         self.img_8 = PhotoImage(file="resources/images/NumEight.png")
         self.img_9 = PhotoImage(file="resources/images/NumNine.png")
-        self.img_ENTER = PhotoImage(file="resources/images/test1.png")
+        self.img_ENTER = PhotoImage(file="resources/images/Enter.png")
 
         # Row 3 Buttons
         self.btn_7 = Button(TopFrame1, width=160, height=60, command= lambda: insert(7), image=self.img_7).grid(row=4, column=0, padx=6, pady=4)
