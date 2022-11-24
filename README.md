@@ -7,5 +7,5 @@ Unfinished Project
 ![atm window 1](resources/screenshots/app1.png?raw=true)
 ![atm window 2](resources/screenshots/app2.png?raw=true)
 
-### Bilbography
+### Biblography
 - [background Image](https://unsplash.com/photos/_6lUTo2UfMY)
