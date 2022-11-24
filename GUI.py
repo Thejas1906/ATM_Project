@@ -13,11 +13,15 @@ class atm:
         self.root.configure(background ='yellow')
 
 #=================================Frame=========================================#
+
         MainFrame = Frame(self.root, bd=20, width=780, height=700, relief=RIDGE)
         MainFrame.grid()
 
+        # Bottom
         TopFrame1 = Frame(MainFrame, bd=7, width=780, height=300, relief=RIDGE)
         TopFrame1.grid(row=1, column=0, padx=12)
+        
+        # Top
         TopFrame2 = Frame(MainFrame, bd=7, width=780, height=300, relief=RIDGE)
         TopFrame2.grid(row=0, column=0, padx=8)
 
@@ -59,55 +63,13 @@ class atm:
 
 #============================Numbers============================================#
 
-        def insert0():
+        # numpad keys function
+        def insert(num):
             CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '0')
 
-        def insert1():
-            CurrentText = CurrentEntry().get()
+            # Inserting a number based on button pressed (num)
             CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '1')
-
-        def insert2():
-            CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '2')
-
-        def insert3():
-            CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '3')
-
-        def insert4():
-            CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '4')
-
-        def insert5():
-            CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '5')
-
-        def insert6():
-            CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '6')
-
-        def insert7():
-            CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '7')
-
-        def insert8():
-            CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '8')
-
-        def insert9():
-            CurrentText = CurrentEntry().get()
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + '9')
+            CurrentEntry().insert(0, CurrentText + str(num))
 
         def cancel():
             cancel = tkinter.messagebox.askyesno("ATM","Do You Want To Exit ?")
@@ -115,6 +77,7 @@ class atm:
                 self.root.destroy()
                 return
 
+        # Only for txtRecipt
         def cls():
             self.txtRecipt.delete("1.0", END)
 
@@ -142,114 +105,90 @@ class atm:
 
 
 #=======================CenterScreen(Widgets)===================================#
+
+        # Main Text Widget
         self.txtRecipt = Text(TopFrame2Mid, height = 17, width = 42, bd=12, font=('arial',11,'bold'))
         self.txtRecipt.grid(row=0,column=0)
 
 #=============================LeftArrow(Widgets)================================#
-        self.img_arrow_Left = PhotoImage(file= "C:\IP PICS\lArrow.png")
-        self.root.btnArrowL1=Button(TopFrame2Left, width=120, height=60, state=NORMAL,command= btnltra,
-        image=self.img_arrow_Left).grid(row=0, column=0, padx=2, pady=2)
 
-        self.btnArrowL2 = Button(TopFrame2Left, width=120, height=60, state=NORMAL,command= btnrana,
-        image=self.img_arrow_Left).grid(row=1, column=0, padx=2, pady=2)
+        # Left Arrow Image
+        self.img_ArrowL = PhotoImage(file= "resources/images/LeftArrow.png")
 
-        self.btnArrowL3 = Button(TopFrame2Left, width=120, height=60, state=NORMAL,
-        image=self.img_arrow_Left).grid(row=2, column=0, padx=2, pady=2)
-
-        self.btnArrowL4=Button(TopFrame2Left, width=120, height=60, state=NORMAL,
-        image=self.img_arrow_Left).grid(row=3, column=0, padx=2, pady=2)
+        # Left Arrow Buttons
+        self.btnArrowL1=Button(TopFrame2Left, width=120, height=60, state=NORMAL,command= btnltra, image=self.img_ArrowL).grid(row=0, column=0, padx=2, pady=2)
+        self.btnArrowL2 = Button(TopFrame2Left, width=120, height=60, state=NORMAL,command= btnrana, image=self.img_ArrowL).grid(row=1, column=0, padx=2, pady=2)
+        self.btnArrowL3 = Button(TopFrame2Left, width=120, height=60, state=NORMAL, image=self.img_ArrowL).grid(row=2, column=0, padx=2, pady=2)
+        self.btnArrowL4=Button(TopFrame2Left, width=120, height=60, state=NORMAL, image=self.img_ArrowL).grid(row=3, column=0, padx=2, pady=2)
 
 #==========================RightArrow(Widgets)==================================#
-        self.img_arrow_Right = PhotoImage(file= "C:\IP PICS\dArrow.png")
-        self.btnArrowR1=Button(TopFrame2Right, width=120, height=60, state=NORMAL,
-        image=self.img_arrow_Right).grid(row=0, column=0, padx=2, pady=2)
 
-        self.btnArrowR2 = Button(TopFrame2Right, width=120, height=60, state=NORMAL,
-        image=self.img_arrow_Right).grid(row=1, column=0, padx=2, pady=2)
+        # Right Arrow Image
+        self.img_ArrowR = PhotoImage(file= "resources/images/RightArrow.png")
 
-        self.btnArrowR3 = Button(TopFrame2Right, width=120, height=60, state=NORMAL,
-        image=self.img_arrow_Right).grid(row=2, column=0, padx=2, pady=2)
-
-        self.btnArrowR4=Button(TopFrame2Right, width=120, height=60, state=NORMAL,
-        image=self.img_arrow_Right).grid(row=3, column=0, padx=2, pady=2)
+        # Right Arrow Buttons
+        self.btnArrowR1=Button(TopFrame2Right, width=120, height=60, state=NORMAL, image=self.img_ArrowR).grid(row=0, column=0, padx=2, pady=2)
+        self.btnArrowR2 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, image=self.img_ArrowR).grid(row=1, column=0, padx=2, pady=2)
+        self.btnArrowR3 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, image=self.img_ArrowR).grid(row=2, column=0, padx=2, pady=2)
+        self.btnArrowR4=Button(TopFrame2Right, width=120, height=60, state=NORMAL, image=self.img_ArrowR).grid(row=3, column=0, padx=2, pady=2)
 
 #=============================Number Pad(Widgets)===============================#
-#=============================ROW ONE===========================================#
-        self.img1 = PhotoImage(file= "C:\IP PICS\one.png")
-        self.btn1=Button(TopFrame1, width=160, height=60,command= insert1,
-        image=self.img1).grid(row=2, column=0, padx=6, pady=4)
 
-        self.img2 = PhotoImage(file="C:\IP PICS\dtwo.png")
-        self.btn2 = Button(TopFrame1, width=160, height=60,command= insert2,
-        image=self.img2).grid(row=2, column=1, padx=6, pady=4)
+        # Row 1 Images
+        self.img_1 = PhotoImage(file="resources/images/NumOne.png")
+        self.img_2 = PhotoImage(file="resources/images/NumTwo.png")
+        self.img_3 = PhotoImage(file="resources/images/NumThree.png")
+        self.img_CANCEL = PhotoImage(file="resources/images/test1.png")
 
-        self.img3 = PhotoImage(file="C:\IP PICS\dthree.png")
-        self.btn3 = Button(TopFrame1, width=160, height=60,command= insert3,
-        image=self.img3).grid(row=2, column=2, padx=6, pady=4)
-
-        self.imgCL = PhotoImage(file="C:\IP PICS\cancel.png")
-        self.btnCL = Button(TopFrame1, width=160, height=60,command= cancel,
-        image=self.imgCL).grid(row=2, column=3, padx=6, pady=4)
-
-#================================ROW TWO========================================#
-        self.img4 = PhotoImage(file="C:\IP PICS\dfour.png")
-        self.btn4 = Button(TopFrame1, width=160, height=60,command= insert4,
-        image=self.img4).grid(row=3, column=0, padx=6, pady=4)
-
-        self.img5 = PhotoImage(file="C:\IP PICS\dfive.png")
-        self.btn5= Button(TopFrame1, width=160, height=60,command= insert5,
-        image=self.img5).grid(row=3, column=1, padx=6, pady=4)
-
-        self.img6 = PhotoImage(file="C:\IP PICS\dsix.png")
-        self.btn6 = Button(TopFrame1, width=160, height=60,command= insert6,
-        image=self.img6).grid(row=3, column=2, padx=6, pady=4)
-
-        self.imgCLR = PhotoImage(file="C:\IP PICS\clear.png")
-        self.btnCLR = Button(TopFrame1, width=160, height=60,
-        image=self.imgCLR).grid(row=3, column=3, padx=6, pady=4)
-
-#=========================ROW THREE=============================================#
-        self.img7 = PhotoImage(file="C:\IP PICS\dseven.png")
-        self.btn7 = Button(TopFrame1, width=160, height=60,command= insert7,
-        image=self.img7).grid(row=4, column=0, padx=6, pady=4)
-
-        self.img8 = PhotoImage(file="C:\IP PICS\deight.png")
-        self.btn8 = Button(TopFrame1, width=160, height=60,command= insert8,
-        image=self.img8).grid(row=4, column=1, padx=6, pady=4)
-
-        self.img9 = PhotoImage(file="C:\IP PICS\dnine.png")
-        self.btn9 = Button(TopFrame1, width=160, height=60,command= insert9,
-        image=self.img9).grid(row=4, column=2, padx=6, pady=4)
-
-        self.imgETR = PhotoImage(file="C:\IP PICS\enter.png")
-        self.btnETR = Button(TopFrame1, width=160, height=60,
-        image=self.imgETR).grid(row=4, column=3, padx=6, pady=4)
-
-#================================ROW FOUR======================================#
-
-        self.img0 = PhotoImage(file="C:\IP PICS\zero.png")
-        self.btnETR = Button(TopFrame1, width=160, height=60,command= insert0,
-        image=self.img0).grid(row=5, column=1, padx=6, pady=4)
+        # Row 1 Buttons
+        self.btn_1=Button(TopFrame1, width=160, height=60, command= lambda: insert(1), image=self.img_1).grid(row=2, column=0, padx=6, pady=4)
+        self.btn_2 = Button(TopFrame1, width=160, height=60, command= lambda: insert(2), image=self.img_2).grid(row=2, column=1, padx=6, pady=4)
+        self.btn_3 = Button(TopFrame1, width=160, height=60, command= lambda: insert(3), image=self.img_3).grid(row=2, column=2, padx=6, pady=4)
+        self.btn_CANCEL = Button(TopFrame1, width=160, height=60, command=cancel, image=self.img_CANCEL).grid(row=2, column=3, padx=6, pady=4)
 
 
-        self.imgSTR = PhotoImage(file="C:\IP PICS\start.png")
-        self.btnMT = Button(TopFrame1, width=160, height=60,command= start,
-        image=self.imgSTR).grid(row=5, column=3, padx=6, pady=4)
+
+        # Row 2 Images
+        self.img_4 = PhotoImage(file="resources/images/NumFour.png")
+        self.img_5 = PhotoImage(file="resources/images/NumFive.png")
+        self.img_6 = PhotoImage(file="resources/images/NumSix.png")
+        self.img_CLEAR = PhotoImage(file="resources/images/test1.png")
+
+        # Row 2 Buttons
+        self.btn_4 = Button(TopFrame1, width=160, height=60, command= lambda: insert(4), image=self.img_4).grid(row=3, column=0, padx=6, pady=4)
+        self.btn_5= Button(TopFrame1, width=160, height=60, command= lambda: insert(5), image=self.img_5).grid(row=3, column=1, padx=6, pady=4)
+        self.btn_6 = Button(TopFrame1, width=160, height=60, command= lambda: insert(6), image=self.img_6).grid(row=3, column=2, padx=6, pady=4)
+        self.btn_CLEAR = Button(TopFrame1, width=160, height=60, image=self.img_CLEAR).grid(row=3, column=3, padx=6, pady=4)
+
+
+
+        # Row 3 Images
+        self.img_7 = PhotoImage(file="resources/images/NumSeven.png")
+        self.img_8 = PhotoImage(file="resources/images/NumEight.png")
+        self.img_9 = PhotoImage(file="resources/images/NumNine.png")
+        self.img_ENTER = PhotoImage(file="resources/images/test1.png")
+
+        # Row 3 Buttons
+        self.btn_7 = Button(TopFrame1, width=160, height=60, command= lambda: insert(7), image=self.img_7).grid(row=4, column=0, padx=6, pady=4)
+        self.btn_8 = Button(TopFrame1, width=160, height=60, command= lambda: insert(8), image=self.img_8).grid(row=4, column=1, padx=6, pady=4)
+        self.btn_9 = Button(TopFrame1, width=160, height=60, command= lambda: insert(9), image=self.img_9).grid(row=4, column=2, padx=6, pady=4)
+        self.btn_ENTER = Button(TopFrame1, width=160, height=60, image=self.img_ENTER).grid(row=4, column=3, padx=6, pady=4)
+
+
+
+        # Row 4 Images
+        self.img_0 = PhotoImage(file="resources/images/NumZero.png")
+        self.img_START = PhotoImage(file="resources/images/Start.png")
+
+        # Row 4 Buttons
+        self.btn_0 = Button(TopFrame1, width=160, height=60, command= lambda: insert(0), image=self.img_0).grid(row=5, column=1, padx=6, pady=4)
+        self.btn_START = Button(TopFrame1, width=160, height=60, command=start, image=self.img_START).grid(row=5, column=3, padx=6, pady=4)
 
 #=================================Number Pad End================================#
+
 #===================================Main========================================#
 
 if __name__=='__main__':
     root = Tk()
     application = atm(root)
-
-
-
     root.mainloop()
-
-#self.txtRecipt.insert(END, '\nWithdraw :-' + "\n\n\n\n\n")
-#self.txtRecipt.insert(END, 'Check Balance :-' + "\n\n\n\n\n")
-#self.txtRecipt.insert(END, 'Deposit :-' + "\n\n\n\n\n")
-#self.txtRecipt.insert(END, 'Set New PIN Number :-')
-
-
