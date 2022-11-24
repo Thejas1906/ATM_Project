@@ -49,50 +49,65 @@ class atm:
             self.txtRecipt.insert(END, '\nEnter Your Frist Deposit Amount :')
 
         def CurrentEntry():
-            pass
+            widgetSelected = str(root.focus_get()).split('.')[-1][1:]
+            print(widgetSelected)
 
+            if(widgetSelected == "entry"):
+                return AccNo_entry
+            if (widgetSelected == "entry2"):
+                return PIN_entry
 
 #============================Numbers============================================#
 
         def insert0():
-            value0=0
-            self.txtRecipt.insert(END,value0)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '0')
 
         def insert1():
-            value1=1
-            self.txtRecipt.insert(END,value1)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '1')
 
         def insert2():
-            value2=2
-            self.txtRecipt.insert(END, value2)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '2')
 
         def insert3():
-            value3=3
-            self.txtRecipt.insert(END, value3)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '3')
 
         def insert4():
-            value4=4
-            self.txtRecipt.insert(END, value4)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '4')
 
         def insert5():
-            value5=5
-            self.txtRecipt.insert(END, value5)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '5')
 
         def insert6():
-            value6=6
-            self.txtRecipt.insert(END, value6)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '6')
 
         def insert7():
-            value7=7
-            self.txtRecipt.insert(END, value7)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '7')
 
         def insert8():
-            value8=8
-            self.txtRecipt.insert(END, value8)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '8')
 
         def insert9():
-            value9=9
-            self.txtRecipt.insert(END, value9)
+            CurrentText = CurrentEntry().get()
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + '9')
 
         def cancel():
             cancel = tkinter.messagebox.askyesno("ATM","Do You Want To Exit ?")
@@ -104,19 +119,19 @@ class atm:
             self.txtRecipt.delete("1.0", END)
 
         def submit1():
+            global AccNo_entry
+            global PIN_entry
+
             AccNo_var = IntVar()
             PIN_var = IntVar()
 
             AccNo = AccNo_var.get()
             PIN = PIN_var.get()
 
-            AccNo_var.set("")
-            PIN_var.set("")
-
             AccNo_label = Label(TopFrame2Mid, text='Enter Account Number :', font=('arial', 10, 'bold'))
             AccNo_entry = Entry(TopFrame2Mid, textvariable=AccNo_var, font=('arial', 10, 'normal'))
             PIN_label = Label(TopFrame2Mid, text='Enter PIN Number :', font=('arial', 10, 'bold'))
-            PIN_entry = Entry(TopFrame2Mid, textvariable=PIN_var, font=('arial', 10, 'normal'), show='*')
+            PIN_entry = Entry(TopFrame2Mid, textvariable=PIN_var, font=('arial', 10, 'normal'))
 
             AccNo_label.place(x=20, y=30)
             AccNo_entry.place(x=20, y=60)
