@@ -43,25 +43,34 @@ class atm:
             elif(self.screen == "login or register"):
                 self.login_label.destroy()
                 self.register_label.destroy()
-                self.dummytext1.destroy()
-                self.dummytext2.destroy()
-            
+            elif(self.screen == "login"):
+                self.AccNo_label.destroy()
+                self.AccNo_entry.destroy()
+                self.PIN_label.destroy()
+                self.PIN_entry.destroy()
+            elif(self.screen == "register"):
+                self.AccNo_label.destroy()
+                self.AccNo_entry.destroy()
+                self.PIN_label.destroy()
+                self.PIN_entry.destroy()
+                self.AccName_label.destroy()
+                self.AccName_entry.destroy()
+                self.PhNo_label.destroy()
+                self.PhNo_entry.destroy()
+            elif(self.screen == "user"):
+                self.withdraw_label.destroy()
+                self.deposit_label.destroy()
+
 
         def start():
             DestroyWidgets()
             self.screen = "login or register"
 
             self.login_label = Label(TopFrame2Mid, text="Login", font=('arial', 20, 'bold'))
-            self.login_label.place(x=15, y=15)
-
             self.register_label = Label(TopFrame2Mid, text="Register", font=('arial', 20, 'bold'))
+            
+            self.login_label.place(x=15, y=15)
             self.register_label.place(x=15, y=85)
-
-            self.dummytext1 = Label(TopFrame2Mid, text="Dummy Text 1", font=('arial', 20, 'bold'))
-            self.dummytext1.place(x=15, y=155)
-
-            self.dummytext2 = Label(TopFrame2Mid, text="Dummy Text 2", font=('arial', 20, 'bold'))
-            self.dummytext2.place(x=15, y=225)
 
         def CurrentEntry():
             widgetSelected = str(root.focus_get()).split('.')[-1][1:]
@@ -75,18 +84,39 @@ class atm:
 #============================Numbers============================================#
 
         # numpad keys function
-        def insert(num):
-            CurrentText = CurrentEntry().get()
 
-            # Inserting a number based on button pressed (num)
-            CurrentEntry().delete(0, END)
-            CurrentEntry().insert(0, CurrentText + str(num))
+        def clear():
+            try:
+                CurrentEntry().delete(0, END)
+            except:
+                print("No entry selected")
+        def insert(num):
+            try:
+                CurrentText = CurrentEntry().get()
+
+                # Inserting a number based on button pressed (num)
+                CurrentEntry().delete(0, END)
+                CurrentEntry().insert(0, CurrentText + str(num))
+            except:
+                print("No entry selected")
 
         def cancel():
             cancel = tkinter.messagebox.askyesno("ATM","Do You Want To Exit ?")
             if cancel == 1:
                 self.root.destroy()
                 return
+
+        def enter():
+            if(self.screen == "login"):
+                DestroyWidgets()
+                self.screen = "user"
+
+                self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
+                self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
+
+                self.withdraw_label.place(x=215, y=15)
+                self.deposit_label.place(x=215, y=85)
+
 
         def arrow(num):
             match(num):
@@ -112,12 +142,28 @@ class atm:
                         DestroyWidgets()
                         self.screen = "register"
 
-                        pass
+                        self.AccNo_label = Label(TopFrame2Mid, text='Set Account Number :', font=('arial', 10, 'bold'))
+                        self.AccNo_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+                        self.PIN_label = Label(TopFrame2Mid, text='Set PIN Number :', font=('arial', 10, 'bold'))
+                        self.PIN_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+                        self.AccName_label = Label(TopFrame2Mid, text="Enter Your Name :", font=('arial', 10, 'bold'))
+                        self.AccName_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+                        self.PhNo_label = Label(TopFrame2Mid, text="Enter Phone Number :", font=('arial', 10, 'bold'))
+                        self.PhNo_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+
+                        self.AccNo_label.place(x=15, y=15)
+                        self.AccNo_entry.place(x=15, y=40)
+                        self.PIN_label.place(x=15, y=80)
+                        self.PIN_entry.place(x=15, y=105)
+                        self.AccName_label.place(x=15, y=150)
+                        self.AccName_entry.place(x=15, y=175)
+                        self.PhNo_label.place(x=15, y=220)
+                        self.PhNo_entry.place(x=15, y=245)
 
 
 #===============================================================================#
 
-        # "welcome", "login or register", "login", "user"
+        # "welcome", "login or register", "login", "user", "register"
         self.screen = "welcome"
 
 #=======================CenterScreen(Widgets)===================================#
@@ -181,7 +227,7 @@ class atm:
         self.btn_4 = Button(TopFrame1, width=160, height=60, command= lambda: insert(4), image=self.img_4).grid(row=3, column=0, padx=6, pady=4)
         self.btn_5= Button(TopFrame1, width=160, height=60, command= lambda: insert(5), image=self.img_5).grid(row=3, column=1, padx=6, pady=4)
         self.btn_6 = Button(TopFrame1, width=160, height=60, command= lambda: insert(6), image=self.img_6).grid(row=3, column=2, padx=6, pady=4)
-        self.btn_CLEAR = Button(TopFrame1, width=160, height=60, image=self.img_CLEAR).grid(row=3, column=3, padx=6, pady=4)
+        self.btn_CLEAR = Button(TopFrame1, width=160, height=60, command=clear, image=self.img_CLEAR).grid(row=3, column=3, padx=6, pady=4)
 
 
 
@@ -195,7 +241,7 @@ class atm:
         self.btn_7 = Button(TopFrame1, width=160, height=60, command= lambda: insert(7), image=self.img_7).grid(row=4, column=0, padx=6, pady=4)
         self.btn_8 = Button(TopFrame1, width=160, height=60, command= lambda: insert(8), image=self.img_8).grid(row=4, column=1, padx=6, pady=4)
         self.btn_9 = Button(TopFrame1, width=160, height=60, command= lambda: insert(9), image=self.img_9).grid(row=4, column=2, padx=6, pady=4)
-        self.btn_ENTER = Button(TopFrame1, width=160, height=60, image=self.img_ENTER).grid(row=4, column=3, padx=6, pady=4)
+        self.btn_ENTER = Button(TopFrame1, width=160, height=60, command=enter, image=self.img_ENTER).grid(row=4, column=3, padx=6, pady=4)
 
 
 
