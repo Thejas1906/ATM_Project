@@ -1,4 +1,4 @@
-from tools import *
+# from tools import *
 import pandas as pd
 import tkinter.messagebox
 from tkinter import *
@@ -78,8 +78,16 @@ class atm:
 
             if(widgetSelected == "entry"):
                 return self.AccNo_entry
-            if (widgetSelected == "entry2"):
+            elif(widgetSelected == "entry2"):
                 return self.PIN_entry
+            elif(widgetSelected == "entry5"):
+                return self.AccNo_entry
+            elif(widgetSelected == "entry6"):
+                return self.PIN_entry
+            elif(widgetSelected == "entry3"):
+                return self.AccName_entry
+            elif(widgetSelected == "entry4"):
+                return self.PhNo_entry
 
 #============================Numbers============================================#
 
@@ -91,14 +99,11 @@ class atm:
             except:
                 print("No entry selected")
         def insert(num):
-            try:
-                CurrentText = CurrentEntry().get()
+            CurrentText = CurrentEntry().get()
 
-                # Inserting a number based on button pressed (num)
-                CurrentEntry().delete(0, END)
-                CurrentEntry().insert(0, CurrentText + str(num))
-            except:
-                print("No entry selected")
+            # Inserting a number based on button pressed (num)
+            CurrentEntry().delete(0, END)
+            CurrentEntry().insert(0, CurrentText + str(num))
 
         def cancel():
             cancel = tkinter.messagebox.askyesno("ATM","Do You Want To Exit ?")
@@ -113,10 +118,13 @@ class atm:
 
                 self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
                 self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
+                self.history_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
+                self.changePIN_label = Label(TopFrame2Mid, text="Change PIN", font=('arial', 20, 'bold'))
 
                 self.withdraw_label.place(x=215, y=15)
                 self.deposit_label.place(x=215, y=85)
-
+                self.history_label.place(x=215, y=155)
+                self.changePIN_label.place(x=215, y=225)
 
         def arrow(num):
             match(num):
@@ -250,7 +258,7 @@ class atm:
         self.img_START = PhotoImage(file="resources/images/Start.png")
 
         # Row 4 Buttons
-        self.btn_0 = Button(TopFrame1, width=160, height=60, command= lambda: insert(0), image=self.img_0).grid(row=5, column=1, padx=6, pady=4)
+        self.btn_0 = Button(TopFrame1, width=160, height=60, command=CurrentEntry, image=self.img_0).grid(row=5, column=1, padx=6, pady=4)
         self.btn_START = Button(TopFrame1, width=160, height=60, command=start, image=self.img_START).grid(row=5, column=3, padx=6, pady=4)
 
 #=================================Number Pad End================================#
