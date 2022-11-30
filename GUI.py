@@ -60,8 +60,11 @@ class atm:
             elif(self.screen == "user"):
                 self.withdraw_label.destroy()
                 self.deposit_label.destroy()
+                self.History_label.destroy()
+                self.changePIN_label.destroy()
+                
 
-
+                
         def start():
             DestroyWidgets()
             self.screen = "login or register"
@@ -118,14 +121,35 @@ class atm:
 
                 self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
                 self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
-                self.history_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
+                self.History_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
                 self.changePIN_label = Label(TopFrame2Mid, text="Change PIN", font=('arial', 20, 'bold'))
 
-                self.withdraw_label.place(x=215, y=15)
-                self.deposit_label.place(x=215, y=85)
-                self.history_label.place(x=215, y=155)
-                self.changePIN_label.place(x=215, y=225)
+                self.withdraw_label.place(x=258, y=15)
+                self.deposit_label.place(x=280, y=85)
+                self.History_label.place(x=285, y=155)
+                self.changePIN_label.place(x=225, y=225)
 
+            elif(self.screen == "register"):
+                DestroyWidgets()
+                self.screen = "user"
+
+                self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
+                self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
+                self.History_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
+                self.changePIN_label = Label(TopFrame2Mid, text="Change PIN", font=('arial', 20, 'bold'))
+
+                self.withdraw_label.place(x=258, y=15)
+                self.deposit_label.place(x=280, y=85)
+                self.History_label.place(x=285, y=155)
+                self.changePIN_label.place(x=225, y=225)
+
+                
+
+                       
+
+
+
+                
         def arrow(num):
             match(num):
                 case 1:
@@ -171,7 +195,7 @@ class atm:
 
 #===============================================================================#
 
-        # "welcome", "login or register", "login", "user", "register"
+        # "welcome", "login or register", "login", "user", "register", "Withdraw"
         self.screen = "welcome"
 
 #=======================CenterScreen(Widgets)===================================#
