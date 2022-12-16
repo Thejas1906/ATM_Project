@@ -62,6 +62,21 @@ class atm:
                 self.deposit_label.destroy()
                 self.History_label.destroy()
                 self.changePIN_label.destroy()
+            elif(self.screen == "withdraw"):
+                self.withdraw_label.destroy()
+                self.withdraw_entry.destroy()
+            elif(self.screen == "deposit"):
+                self.dep_label.destroy()
+                self.dep_entry.destroy()
+            elif(self.screen == "changePIN"):
+                self.cpo_label.destroy()
+                self.cpo_entry.destroy()
+                self.cpn_label.destroy()
+                self.cpn_entry.destroy()
+                
+
+
+
                 
 
                 
@@ -121,13 +136,13 @@ class atm:
 
                 self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
                 self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
-                self.History_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
                 self.changePIN_label = Label(TopFrame2Mid, text="Change PIN", font=('arial', 20, 'bold'))
+                self.History_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
 
                 self.withdraw_label.place(x=258, y=15)
                 self.deposit_label.place(x=280, y=85)
-                self.History_label.place(x=285, y=155)
                 self.changePIN_label.place(x=225, y=225)
+                self.History_label.place(x=285, y=155)
 
             elif(self.screen == "register"):
                 DestroyWidgets()
@@ -143,13 +158,54 @@ class atm:
                 self.History_label.place(x=285, y=155)
                 self.changePIN_label.place(x=225, y=225)
 
-                
+        def wdArrow():
+            if(self.screen == "user"):
+                DestroyWidgets()
+                self.screen = "withdraw"
 
-                       
+                self.withdraw_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
+                self.withdraw_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+
+                self.withdraw_label.place(x=15, y=15)
+                self.withdraw_entry.place(x=15, y=40)
+
+
+        def deparrow():
+            if(self.screen == "user"):
+                DestroyWidgets()
+                self.screen = "deposit"
+
+                self.dep_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
+                self.dep_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+
+                self.dep_label.place(x=15, y=15)
+                self.dep_entry.place(x=15, y=40)
+
+        def cparrow():
+            if(self.screen == "user"):
+                DestroyWidgets()
+                self.screen = "changePIN"
+
+                self.cpo_label = Label(TopFrame2Mid, text='Enter old PIN :', font=('arial', 10, 'bold'))
+                self.cpo_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+
+                self.cpn_label = Label(TopFrame2Mid, text='Enter new PIN :', font=('arial', 10, 'bold'))
+                self.cpn_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+
+                self.cpo_label.place(x=15, y=15)
+                self.cpo_entry.place(x=15, y=40)
+
+                self.cpn_label.place(x=15, y=85)
+                self.cpn_entry.place(x=15, y=110)
+
+        
+
+
+    
 
 
 
-                
+
         def arrow(num):
             match(num):
                 case 1:
@@ -228,9 +284,9 @@ class atm:
         self.img_ArrowR = PhotoImage(file= "resources/images/RightArrow.png")
 
         # Right Arrow Buttons
-        self.btnArrow5 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: arrow(5), image=self.img_ArrowR).grid(row=0, column=0, padx=2, pady=2)
-        self.btnArrow6 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: arrow(6), image=self.img_ArrowR).grid(row=1, column=0, padx=2, pady=2)
-        self.btnArrow7 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: arrow(7), image=self.img_ArrowR).grid(row=2, column=0, padx=2, pady=2)
+        self.btnArrow5 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: wdArrow(), image=self.img_ArrowR).grid(row=0, column=0, padx=2, pady=2)
+        self.btnArrow6 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: deparrow(), image=self.img_ArrowR).grid(row=1, column=0, padx=2, pady=2)
+        self.btnArrow7 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: cparrow(), image=self.img_ArrowR).grid(row=2, column=0, padx=2, pady=2)
         self.btnArrow8 = Button(TopFrame2Right, width=120, height=60, state=NORMAL, command= lambda: arrow(8), image=self.img_ArrowR).grid(row=3, column=0, padx=2, pady=2)
 
 #=============================Number Pad(Widgets)===============================#
@@ -282,7 +338,7 @@ class atm:
         self.img_START = PhotoImage(file="resources/images/Start.png")
 
         # Row 4 Buttons
-        self.btn_0 = Button(TopFrame1, width=160, height=60, command=CurrentEntry, image=self.img_0).grid(row=5, column=1, padx=6, pady=4)
+        self.btn_0 = Button(TopFrame1, width=160, height=60, command= lambda: CurrentEntry() ,image=self.img_0).grid(row=5, column=1, padx=6, pady=4)
         self.btn_START = Button(TopFrame1, width=160, height=60, command=start, image=self.img_START).grid(row=5, column=3, padx=6, pady=4)
 
 #=================================Number Pad End================================#
