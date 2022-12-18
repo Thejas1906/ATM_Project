@@ -2,7 +2,7 @@
 import pandas as pd
 import tkinter.messagebox
 from tkinter import *
-from tkinter import ttk
+import data
 
 class atm:
     def __init__(self,root):
@@ -50,6 +50,10 @@ class atm:
                 self.AccNo_entry.destroy()
                 self.PIN_label.destroy()
                 self.PIN_entry.destroy()
+                try:
+                    self.PopUpLabel.destroy()
+                except:
+                    pass
             elif(self.screen == "register"):
                 self.AccNo_label.destroy()
                 self.AccNo_entry.destroy()
@@ -59,17 +63,25 @@ class atm:
                 self.AccName_entry.destroy()
                 self.PhNo_label.destroy()
                 self.PhNo_entry.destroy()
+                try:
+                    self.PopUpLabel.destroy()
+                except:
+                    pass
             elif(self.screen == "user"):
                 self.withdraw_label.destroy()
                 self.deposit_label.destroy()
                 self.History_label.destroy()
                 self.changePIN_label.destroy()
+                self.user_label.destroy()
+                self.balance_label.destroy()
             elif(self.screen == "withdraw"):
                 self.withdraw_label.destroy()
                 self.withdraw_entry.destroy()
+                self.balance_label.destroy()
             elif(self.screen == "deposit"):
                 self.dep_label.destroy()
                 self.dep_entry.destroy()
+                self.balance_label.destroy()
             elif(self.screen == "changePIN"):
                 self.cpo_label.destroy()
                 self.cpo_entry.destroy()
@@ -119,34 +131,47 @@ class atm:
                 self.root.destroy()
                 return
 
+        def UserPanel(AccNo):
+            DestroyWidgets()
+            self.screen = "user"
+
+            self.user_label = Label(TopFrame2Mid, text=f"{data.getName(self.AccNo)}'s User Panel")
+            self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
+
+            self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
+            self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
+            self.History_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
+            self.changePIN_label = Label(TopFrame2Mid, text="Change PIN", font=('arial', 20, 'bold'))
+
+            self.user_label.place(x=5, y=5)
+            self.balance_label.place(x=5, y=28)
+                
+            self.withdraw_label.place(x=258, y=15)
+            self.deposit_label.place(x=280, y=85)
+            self.History_label.place(x=285, y=155)
+            self.changePIN_label.place(x=225, y=225)
+
         def enter():
             if(self.screen == "login"):
-                DestroyWidgets()
-                self.screen = "user"
-
-                self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
-                self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
-                self.History_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
-                self.changePIN_label = Label(TopFrame2Mid, text="Change PIN", font=('arial', 20, 'bold'))
-
-                self.withdraw_label.place(x=258, y=15)
-                self.deposit_label.place(x=280, y=85)
-                self.History_label.place(x=285, y=155)
-                self.changePIN_label.place(x=225, y=225)
-
+                self.AccNo = int(self.AccNo_entry.get())
+                self.Pin = int(self.PIN_entry.get())
+                
+                if(data.login(AccNo=self.AccNo, Pin=self.Pin) == "success"):
+                    UserPanel(self.AccNo)
+                elif(data.login(AccNo=self.AccNo, Pin=self.Pin) == "no data"):
+                    self.PopUpLabel = Label(TopFrame2Mid, text="No Data Present", font=('arial', 20, 'bold'))
+                    self.PopUpLabel.place(x=15, y=155)
             elif(self.screen == "register"):
-                DestroyWidgets()
-                self.screen = "user"
+                self.AccNo = int(self.AccNo_entry.get())
+                self.Pin = int(self.PIN_entry.get())
+                self.Name = self.AccName_entry.get()
+                self.PhNo = int(self.PhNo_entry.get())
 
-                self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
-                self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
-                self.History_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
-                self.changePIN_label = Label(TopFrame2Mid, text="Change PIN", font=('arial', 20, 'bold'))
-
-                self.withdraw_label.place(x=258, y=15)
-                self.deposit_label.place(x=280, y=85)
-                self.History_label.place(x=285, y=155)
-                self.changePIN_label.place(x=225, y=225)
+                if(data.register(AccNo=self.AccNo, Pin=self.Pin, Name=self.Name, PhNo=self.PhNo) == "success"):
+                    UserPanel(self.AccNo)
+                elif(data.register(AccNo=self.AccNo, Pin=self.Pin, Name=self.Name, PhNo=self.PhNo) == "already exists"):
+                    self.PopUpLabel = Label(TopFrame2Mid, text="Account\nAlready\nExists", font=('arial', 20, 'bold'))
+                    self.PopUpLabel.place(x=270, y=15)
 
         
         def arrow(num):
@@ -201,15 +226,18 @@ class atm:
                     if(self.screen == "user"):
                         pass
                 case 4:
-                    widgetSelected = str(root.focus_get()).split('.')[-1][1:]
-                    print(widgetSelected)
+                    pass
                 case 5:
                     if(self.screen == "user"):
                         DestroyWidgets()
                         self.screen = "withdraw"
 
+                        self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
+
                         self.withdraw_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.withdraw_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
+
+                        self.balance_label.place(x=5, y=5)
 
                         self.withdraw_label.place(x=15, y=15)
                         self.withdraw_entry.place(x=15, y=40)
@@ -221,6 +249,8 @@ class atm:
                     if(self.screen == "user"):
                         DestroyWidgets()
                         self.screen = "deposit"
+                        
+                        self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
 
                         self.dep_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.dep_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
@@ -229,8 +259,8 @@ class atm:
                         self.dep_entry.place(x=15, y=40)
 
                         self.entryList.append(self.dep_entry)
-                        if(self.screen == "deposit"):
-                            pass
+                    if(self.screen == "deposit"):
+                        pass
 
                 case 8:
                     if(self.screen == "user"):

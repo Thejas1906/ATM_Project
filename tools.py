@@ -32,6 +32,7 @@ def IntInput(msg, bounds=(None, None), digit=None):
             print(f"{RED}Enter A Numeric Value Only{RESET}\n")
             pass
 
+# Console
 def Menu(HEADER, CONTENTS):
     # No. of spaces Before and After text
     PADDING = 2
