@@ -3,6 +3,7 @@ import pandas as pd
 import tkinter.messagebox
 from tkinter import *
 import data
+import tools_GUI
 
 class atm:
     def __init__(self,root):
@@ -156,22 +157,39 @@ class atm:
                 self.AccNo = int(self.AccNo_entry.get())
                 self.Pin = int(self.PIN_entry.get())
                 
-                if(data.login(AccNo=self.AccNo, Pin=self.Pin) == "success"):
+                if(data.login(AccNo=self.AccNo, Pin=self.Pin) == "Success"):
                     UserPanel(self.AccNo)
-                elif(data.login(AccNo=self.AccNo, Pin=self.Pin) == "no data"):
-                    self.PopUpLabel = Label(TopFrame2Mid, text="No Data Present", font=('arial', 20, 'bold'))
-                    self.PopUpLabel.place(x=15, y=155)
+                elif(data.login(AccNo=self.AccNo, Pin=self.Pin) == "No Data"):
+                    tkinter.messagebox.showwarning("Not Found", "No such account exists")
             elif(self.screen == "register"):
                 self.AccNo = int(self.AccNo_entry.get())
                 self.Pin = int(self.PIN_entry.get())
                 self.Name = self.AccName_entry.get()
                 self.PhNo = int(self.PhNo_entry.get())
 
-                if(data.register(AccNo=self.AccNo, Pin=self.Pin, Name=self.Name, PhNo=self.PhNo) == "success"):
-                    UserPanel(self.AccNo)
-                elif(data.register(AccNo=self.AccNo, Pin=self.Pin, Name=self.Name, PhNo=self.PhNo) == "already exists"):
-                    self.PopUpLabel = Label(TopFrame2Mid, text="Account\nAlready\nExists", font=('arial', 20, 'bold'))
-                    self.PopUpLabel.place(x=270, y=15)
+                AccNo_check = tools_GUI.CheckInt(self.AccNo, digit=8)
+                Pin_check = tools_GUI.CheckInt(self.Pin, digit=4)
+                PhNo_check = tools_GUI.CheckInt(self.PhNo, digit=10)
+                
+                if(AccNo_check == "Int" and Pin_check == "Int" and PhNo_check == "Int"):
+                    if(data.register(self.AccNo, self.Pin, self.Name, self.PhNo) == "Success"):
+                        UserPanel(self.AccNo)
+                    elif(data.register(self.AccNo, self.Pin, self.Name, self.PhNo) == "Already Exists"):
+                        tkinter.messagebox.showwarning("Already Exists", "An account with this account number already exists")
+                elif(AccNo_check == "Digit Error"):
+                    tkinter.messagebox.showwarning("Digit Error", "Enter an 8 digit account number")
+                elif(Pin_check == "Digit Error"):
+                    tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
+                elif(PhNo_check == "Digit Error"):
+                    tkinter.messagebox.showwarning("Digit Error", "Enter an 10 digit phone number")
+                
+                
+            elif(self.screen == "withdraw"):
+                data.withdraw(self.AccNo, int(self.withdraw_entry.get()))
+                UserPanel(self.AccNo)
+            elif(self.screen == "deposit"):
+                data.deposit(self.AccNo, int(self.dep_entry.get()))
+                UserPanel(self.AccNo)
 
         
         def arrow(num):
@@ -239,8 +257,8 @@ class atm:
 
                         self.balance_label.place(x=5, y=5)
 
-                        self.withdraw_label.place(x=15, y=15)
-                        self.withdraw_entry.place(x=15, y=40)
+                        self.withdraw_label.place(x=15, y=85)
+                        self.withdraw_entry.place(x=15, y=110)
 
                         self.entryList.append(self.withdraw_entry)
                     if(self.screen == "withdraw"):
@@ -255,8 +273,10 @@ class atm:
                         self.dep_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.dep_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
 
-                        self.dep_label.place(x=15, y=15)
-                        self.dep_entry.place(x=15, y=40)
+                        self.balance_label.place(x=5, y=5)
+
+                        self.dep_label.place(x=15, y=85)
+                        self.dep_entry.place(x=15, y=110)
 
                         self.entryList.append(self.dep_entry)
                     if(self.screen == "deposit"):
