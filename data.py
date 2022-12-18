@@ -42,6 +42,16 @@ def withdraw(AccNo, amount):
 def deposit(AccNo, amount):
     df.iloc[list(df.index).index(AccNo), 3] += amount
     Save()
-    
+
+def changePIN(AccNo, oldPIN, newPIN):
+    if(oldPIN == df.loc[AccNo][0]):
+        df.iloc[list(df.index).index(AccNo), 0] = newPIN
+        Save()
+        return "Success"
+    else:
+        return "Incorrect PIN"
+
+
+
 
 # print(register(12345678, " ", " ", " "))

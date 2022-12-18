@@ -154,24 +154,25 @@ class atm:
 
         def enter():
             if(self.screen == "login"):
-                self.AccNo = int(self.AccNo_entry.get())
-                self.Pin = int(self.PIN_entry.get())
+                self.AccNo = int(str(self.AccNo_entry.get()).strip())
+                self.Pin = int(str(self.PIN_entry.get()).strip())
                 
                 if(data.login(AccNo=self.AccNo, Pin=self.Pin) == "Success"):
                     UserPanel(self.AccNo)
                 elif(data.login(AccNo=self.AccNo, Pin=self.Pin) == "No Data"):
                     tkinter.messagebox.showwarning("Not Found", "No such account exists")
             elif(self.screen == "register"):
-                self.AccNo = int(self.AccNo_entry.get())
-                self.Pin = int(self.PIN_entry.get())
-                self.Name = self.AccName_entry.get()
-                self.PhNo = int(self.PhNo_entry.get())
+                self.AccNo = int(str(self.AccNo_entry.get()).strip())
+                self.Pin = int(str(self.PIN_entry.get()).strip())
+                self.Name = str(self.AccName_entry.get()).strip()
+                self.PhNo = int(str(self.PhNo_entry.get()).strip())
 
                 AccNo_check = tools_GUI.CheckInt(self.AccNo, digit=8)
                 Pin_check = tools_GUI.CheckInt(self.Pin, digit=4)
+                AccName_check = tools_GUI.CheckSTR(self.Name)
                 PhNo_check = tools_GUI.CheckInt(self.PhNo, digit=10)
                 
-                if(AccNo_check == "Int" and Pin_check == "Int" and PhNo_check == "Int"):
+                if(AccNo_check == "Int" and Pin_check == "Int" and AccName_check == "STR" and PhNo_check == "Int"):
                     if(data.register(self.AccNo, self.Pin, self.Name, self.PhNo) == "Success"):
                         UserPanel(self.AccNo)
                     elif(data.register(self.AccNo, self.Pin, self.Name, self.PhNo) == "Already Exists"):
@@ -182,13 +183,24 @@ class atm:
                     tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
                 elif(PhNo_check == "Digit Error"):
                     tkinter.messagebox.showwarning("Digit Error", "Enter an 10 digit phone number")
-                
-                
+                elif(AccName_check == "Non STR"):
+                    tkinter.messagebox.showwarning("Text Error", "Enter an alphabetical value")
+
+
+            elif(self.screen == "changePIN"):
+                self.cpo = int(self.cpo_entry.get())
+                self.cpn = int(self.cpn_entry.get())
+                data.changePIN(self.AccNo, self.cpo, self.cpn)
+                tkinter.messagebox.showinfo("Alert", "Successfully changed your PIN!")
+                UserPanel(self.AccNo)
+
             elif(self.screen == "withdraw"):
                 data.withdraw(self.AccNo, int(self.withdraw_entry.get()))
+                tkinter.messagebox.showinfo("Alert", f"Successfully withdrawed ${self.withdraw_entry.get()}")
                 UserPanel(self.AccNo)
             elif(self.screen == "deposit"):
                 data.deposit(self.AccNo, int(self.dep_entry.get()))
+                tkinter.messagebox.showinfo("Alert", f"Successfully deposited ${self.dep_entry.get()}")
                 UserPanel(self.AccNo)
 
         
