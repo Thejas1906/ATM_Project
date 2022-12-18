@@ -12,6 +12,8 @@ class atm:
         self.root.geometry('790x654+580+140')
         self.root.configure(background ='yellow')
 
+        self.entryList = []
+
 #=================================Frame=========================================#
 
         MainFrame = Frame(self.root, bd=20, width=780, height=700, relief=RIDGE)
@@ -86,21 +88,13 @@ class atm:
             self.register_label.place(x=15, y=85)
 
         def CurrentEntry():
-            widgetSelected = str(root.focus_get()).split('.')[-1][1:]
-            # print(widgetSelected)
+            widgetSelected = root.focus_get()
 
-            if(widgetSelected == "entry"):
-                return self.AccNo_entry
-            elif(widgetSelected == "entry2"):
-                return self.PIN_entry
-            elif(widgetSelected == "entry5"):
-                return self.AccNo_entry
-            elif(widgetSelected == "entry6"):
-                return self.PIN_entry
-            elif(widgetSelected == "entry3"):
-                return self.AccName_entry
-            elif(widgetSelected == "entry4"):
-                return self.PhNo_entry
+
+            for entry in self.entryList:
+                if(widgetSelected == entry):
+                    return entry
+
            
             
 #============================Numbers============================================#
@@ -172,6 +166,9 @@ class atm:
 
                         self.PIN_label.place(x=15, y=85)
                         self.PIN_entry.place(x=15, y=110)
+
+                        self.entryList.append(self.AccNo_entry)
+                        self.entryList.append(self.PIN_entry)
                     if(self.screen == "user"):
                         pass
                 case 2:
@@ -196,10 +193,16 @@ class atm:
                         self.AccName_entry.place(x=15, y=175)
                         self.PhNo_label.place(x=15, y=220)
                         self.PhNo_entry.place(x=15, y=245)
-
-                        if(self.screen == "user"):
-                            pass
-
+                        
+                        self.entryList.append(self.AccNo_entry)
+                        self.entryList.append(self.PIN_entry)
+                        self.entryList.append(self.AccName_entry)
+                        self.entryList.append(self.PhNo_entry)
+                    if(self.screen == "user"):
+                        pass
+                case 4:
+                    widgetSelected = str(root.focus_get()).split('.')[-1][1:]
+                    print(widgetSelected)
                 case 5:
                     if(self.screen == "user"):
                         DestroyWidgets()
@@ -211,6 +214,7 @@ class atm:
                         self.withdraw_label.place(x=15, y=15)
                         self.withdraw_entry.place(x=15, y=40)
 
+                        self.entryList.append(self.withdraw_entry)
                     if(self.screen == "withdraw"):
                         pass
                 case 6:
@@ -224,6 +228,7 @@ class atm:
                         self.dep_label.place(x=15, y=15)
                         self.dep_entry.place(x=15, y=40)
 
+                        self.entryList.append(self.dep_entry)
                         if(self.screen == "deposit"):
                             pass
 
@@ -244,6 +249,8 @@ class atm:
                         self.cpn_label.place(x=15, y=85)
                         self.cpn_entry.place(x=15, y=110)
 
+                        self.entryList.append(self.cpo_entry)
+                        self.entryList.append(self.cpn_entry)
                     if(self.screen == "changePIN"):
                         pass
                     
