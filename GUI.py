@@ -165,27 +165,27 @@ class atm:
                 AccNol_check = tools_GUI.CheckInt(self.AccNo, digit=8)
                 Pinl_check = tools_GUI.CheckInt(self.Pin, digit=4)
 
-            if(AccNol_check == "Int" and Pinl_check == "Int"):
-                if(data.login(self.AccNo,self.Pin) == "Success"):
-                    UserPanel(self.AccNo)
-                elif(data.login(self.AccNo,self.Pin) == "No Data"):
-                    tkinter.messagebox.showwarning("Not Found", "No such account exists")
-            elif(AccNol_check == "Digit Error"):
-                tkinter.messagebox.showwarning("Digit Error", "Enter an 8 digit account number")
-            elif(Pinl_check == "Digit Error"):
-                tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
+                if(AccNol_check == "Int" and Pinl_check == "Int"):
+                    if(data.login(self.AccNo,self.Pin) == "Success"):
+                        UserPanel(self.AccNo)
+                    elif(data.login(self.AccNo,self.Pin) == "No Data"):
+                        tkinter.messagebox.showwarning("Not Found", "No such account exists")
+                elif(AccNol_check == "Digit Error"):
+                    tkinter.messagebox.showwarning("Digit Error", "Enter an 8 digit account number")
+                elif(Pinl_check == "Digit Error"):
+                    tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
 
-            elif(self.screen == "register"):
-                self.AccNo = int(str(self.AccNo_entry.get()).strip())
-                self.Pin = int(str(self.PIN_entry.get()).strip())
-                self.Name = str(self.AccName_entry.get()).strip()
-                self.PhNo = int(str(self.PhNo_entry.get()).strip())
+                elif(self.screen == "register"):
+                    self.AccNo = int(str(self.AccNo_entry.get()).strip())
+                    self.Pin = int(str(self.PIN_entry.get()).strip())
+                    self.Name = str(self.AccName_entry.get()).strip()
+                    self.PhNo = int(str(self.PhNo_entry.get()).strip())
 
                 AccNo_check = tools_GUI.CheckInt(self.AccNo, digit=8)
                 Pin_check = tools_GUI.CheckInt(self.Pin, digit=4)
                 AccName_check = tools_GUI.CheckSTR(self.Name)
                 PhNo_check = tools_GUI.CheckInt(self.PhNo, digit=10)
-                
+                    
                 if(AccNo_check == "Int" and Pin_check == "Int" and AccName_check == "STR" and PhNo_check == "Int"):
                     if(data.register(self.AccNo, self.Pin, self.Name, self.PhNo) == "Success"):
                         UserPanel(self.AccNo)
@@ -300,7 +300,7 @@ class atm:
                         DestroyWidgets()
                         self.screen = "withdraw"
 
-                        self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
+                        self.balance_label = Label(TopFrame2Mid, text=f"Balance:$ {data.getBalance(self.AccNo)}", font=('arial', 10))
 
                         self.withdraw_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.withdraw_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
@@ -319,7 +319,7 @@ class atm:
                         DestroyWidgets()
                         self.screen = "deposit"
                         
-                        self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
+                        self.balance_label = Label(TopFrame2Mid, text=f"Balance:$ {data.getBalance(self.AccNo)}", font=('arial', 10))
 
                         self.dep_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.dep_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
@@ -338,7 +338,7 @@ class atm:
                         DestroyWidgets()
                         self.screen = "History"
 
-                        self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
+                        self.balance_label = Label(TopFrame2Mid, text=f"Balance:$ {data.getBalance(self.AccNo)}", font=('arial', 10))
                         
                         self.wd_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
                         self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
