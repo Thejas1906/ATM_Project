@@ -161,11 +161,20 @@ class atm:
             if(self.screen == "login"):
                 self.AccNo = int(str(self.AccNo_entry.get()).strip())
                 self.Pin = int(str(self.PIN_entry.get()).strip())
-                
-                if(data.login(AccNo=self.AccNo, Pin=self.Pin) == "Success"):
+
+                AccNol_check = tools_GUI.CheckInt(self.AccNo, digit=8)
+                Pinl_check = tools_GUI.CheckInt(self.Pin, digit=4)
+
+            if(AccNol_check == "Int" and Pinl_check == "Int"):
+                if(data.login(self.AccNo,self.Pin) == "Success"):
                     UserPanel(self.AccNo)
-                elif(data.login(AccNo=self.AccNo, Pin=self.Pin) == "No Data"):
+                elif(data.login(self.AccNo,self.Pin) == "No Data"):
                     tkinter.messagebox.showwarning("Not Found", "No such account exists")
+            elif(AccNol_check == "Digit Error"):
+                tkinter.messagebox.showwarning("Digit Error", "Enter an 8 digit account number")
+            elif(Pinl_check == "Digit Error"):
+                tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
+
             elif(self.screen == "register"):
                 self.AccNo = int(str(self.AccNo_entry.get()).strip())
                 self.Pin = int(str(self.PIN_entry.get()).strip())
@@ -180,6 +189,7 @@ class atm:
                 if(AccNo_check == "Int" and Pin_check == "Int" and AccName_check == "STR" and PhNo_check == "Int"):
                     if(data.register(self.AccNo, self.Pin, self.Name, self.PhNo) == "Success"):
                         UserPanel(self.AccNo)
+                        tkinter.messagebox.showinfo("Success", "Successfully Created New Account !")
                     elif(data.register(self.AccNo, self.Pin, self.Name, self.PhNo) == "Already Exists"):
                         tkinter.messagebox.showwarning("Already Exists", "An account with this account number already exists")
                 elif(AccNo_check == "Digit Error"):
@@ -195,9 +205,20 @@ class atm:
             elif(self.screen == "changePIN"):
                 self.cpo = int(self.cpo_entry.get())
                 self.cpn = int(self.cpn_entry.get())
-                data.changePIN(self.AccNo, self.cpo, self.cpn)
-                tkinter.messagebox.showinfo("Alert", "Successfully changed your PIN!")
-                UserPanel(self.AccNo)
+
+                oldP_check = tools_GUI.CheckInt(self.cpo, digit=4)
+                newP_check = tools_GUI.CheckInt(self.cpn, digit=4)
+
+                if(oldP_check == "Int" and newP_check == "Int"):
+                    if(data.changePIN(self.AccNo, self.cpo, self.cpn)) == "Success":
+                        UserPanel(self.AccNo)
+                        tkinter.messagebox.showinfo("Alert", "Successfully changed your PIN!")
+                    elif(data.changePIN(self.AccNo,self.cpo) == "Incorrect PIN"):
+                        tkinter.messagebox.showwarning("Incorrect PIN", "Please Check entered PIN")
+                elif(oldP_check == "Digit Error"):
+                    tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
+                elif(newP_check == "Digit Error"):
+                    tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
 
             elif(self.screen == "withdraw"):
                 data.withdraw(self.AccNo, int(self.withdraw_entry.get()))
@@ -260,7 +281,7 @@ class atm:
                         self.entryList.append(self.AccName_entry)
                         self.entryList.append(self.PhNo_entry)
                     if(self.screen == "user"):
-                        pass
+                        pass 
 
                 case 3:
                     if(self.screen == "History"):
@@ -358,7 +379,7 @@ class atm:
 #=======================CenterScreen(Widgets)===================================#
 
         # 400 x 275
-        self.img_atm_background = PhotoImage(file="resources/images/background2.png")
+        self.img_atm_background = PhotoImage(file="resources/images/background.png")
         self.atm_background = Label(TopFrame2Mid, image=self.img_atm_background)
         self.atm_background.grid(row=0, column=0)
 
