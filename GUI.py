@@ -89,6 +89,10 @@ class atm:
                 self.cpo_entry.destroy()
                 self.cpn_label.destroy()
                 self.cpn_entry.destroy()
+            elif(self.screen == "History"):
+                self.wd_label.destroy()
+                self.deposit_label.destroy()
+
                 
                 
         def start():
@@ -260,7 +264,7 @@ class atm:
 
                 case 3:
                     if(self.screen == "History"):
-                        date1 = []
+                        date1 = ["25/12","26/12","27/12"]
                         withdrawed = [3,4,6]
                         plt.plot(date1,withdrawed, color = "r")
                         plt.yticks(withdrawed)
@@ -315,10 +319,10 @@ class atm:
 
                         self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
                         
-                        self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
+                        self.wd_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
                         self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
                         
-                        self.withdraw_label.place(x=15, y=155)
+                        self.wd_label.place(x=15, y=155)
                         self.deposit_label.place(x=15, y=225)
 
 
