@@ -1,4 +1,5 @@
 # from tools import *
+import matplotlib.pyplot as plt
 import pandas as pd
 import tkinter.messagebox
 from tkinter import *
@@ -141,7 +142,7 @@ class atm:
 
             self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
             self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
-            self.History_label = Label(TopFrame2Mid, text="History", font=('arial', 20, 'bold'))
+            self.History_label = Label(TopFrame2Mid, text="Transaction History", font=('arial', 20, 'bold'))
             self.changePIN_label = Label(TopFrame2Mid, text="Change PIN", font=('arial', 20, 'bold'))
 
             self.user_label.place(x=5, y=5)
@@ -149,7 +150,7 @@ class atm:
                 
             self.withdraw_label.place(x=258, y=15)
             self.deposit_label.place(x=280, y=85)
-            self.History_label.place(x=285, y=155)
+            self.History_label.place(x=120, y=155)
             self.changePIN_label.place(x=225, y=225)
 
         def enter():
@@ -226,6 +227,7 @@ class atm:
                         self.entryList.append(self.PIN_entry)
                     if(self.screen == "user"):
                         pass
+
                 case 2:
                     if(self.screen == "login or register"):
                         DestroyWidgets()
@@ -255,8 +257,19 @@ class atm:
                         self.entryList.append(self.PhNo_entry)
                     if(self.screen == "user"):
                         pass
+
+                case 3:
+                    if(self.screen == "History"):
+                        date1 = []
+                        withdrawed = [3,4,6]
+                        plt.plot(date1,withdrawed, color = "r")
+                        plt.yticks(withdrawed)
+                        plt.show()
+
+
                 case 4:
                     pass
+
                 case 5:
                     if(self.screen == "user"):
                         DestroyWidgets()
@@ -275,6 +288,7 @@ class atm:
                         self.entryList.append(self.withdraw_entry)
                     if(self.screen == "withdraw"):
                         pass
+
                 case 6:
                     if(self.screen == "user"):
                         DestroyWidgets()
@@ -293,6 +307,20 @@ class atm:
                         self.entryList.append(self.dep_entry)
                     if(self.screen == "deposit"):
                         pass
+
+                case 7:
+                    if(self.screen == "user"):
+                        DestroyWidgets()
+                        self.screen = "History"
+
+                        self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
+                        
+                        self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
+                        self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
+                        
+                        self.withdraw_label.place(x=15, y=155)
+                        self.deposit_label.place(x=15, y=225)
+
 
                 case 8:
                     if(self.screen == "user"):
@@ -316,8 +344,6 @@ class atm:
                     if(self.screen == "changePIN"):
                         pass
                     
-
-
 
 
 #===============================================================================#
