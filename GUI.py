@@ -358,7 +358,7 @@ class atm:
 #=======================CenterScreen(Widgets)===================================#
 
         # 400 x 275
-        self.img_atm_background = PhotoImage(file="resources/images/background.png")
+        self.img_atm_background = PhotoImage(file="resources/images/background2.png")
         self.atm_background = Label(TopFrame2Mid, image=self.img_atm_background)
         self.atm_background.grid(row=0, column=0)
 
