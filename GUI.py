@@ -1,4 +1,3 @@
-# from tools import *
 import matplotlib.pyplot as plt
 import pandas as pd
 import tkinter.messagebox
@@ -142,7 +141,7 @@ class atm:
             self.screen = "user"
 
             self.user_label = Label(TopFrame2Mid, text=f"{data.getName(self.AccNo)}'s User Panel")
-            self.balance_label = Label(TopFrame2Mid, text=f"Balance: {data.getBalance(self.AccNo)}", font=('arial', 10))
+            self.balance_label = Label(TopFrame2Mid, text=f"Balance: ${data.getBalance(self.AccNo)}", font=('arial', 10))
 
             self.withdraw_label = Label(TopFrame2Mid, text="Withdraw", font=('arial', 20, 'bold'))
             self.deposit_label = Label(TopFrame2Mid, text="Deposit", font=('arial', 20, 'bold'))
@@ -175,11 +174,11 @@ class atm:
                 elif(Pinl_check == "Digit Error"):
                     tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
 
-                elif(self.screen == "register"):
-                    self.AccNo = int(str(self.AccNo_entry.get()).strip())
-                    self.Pin = int(str(self.PIN_entry.get()).strip())
-                    self.Name = str(self.AccName_entry.get()).strip()
-                    self.PhNo = int(str(self.PhNo_entry.get()).strip())
+            elif(self.screen == "register"):
+                self.AccNo = int(str(self.AccNo_entry.get()).strip())
+                self.Pin = int(str(self.PIN_entry.get()).strip())
+                self.Name = str(self.AccName_entry.get()).strip()
+                self.PhNo = int(str(self.PhNo_entry.get()).strip())
 
                 AccNo_check = tools_GUI.CheckInt(self.AccNo, digit=8)
                 Pin_check = tools_GUI.CheckInt(self.Pin, digit=4)
@@ -221,12 +220,18 @@ class atm:
                     tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
 
             elif(self.screen == "withdraw"):
-                data.withdraw(self.AccNo, int(self.withdraw_entry.get()))
-                tkinter.messagebox.showinfo("Alert", f"Successfully withdrawed ${self.withdraw_entry.get()}")
-                UserPanel(self.AccNo)
+                amount = int(self.withdraw_entry.get())
+                withdraw_check = data.withdraw(self.AccNo, amount)
+                
+                if(withdraw_check == "Success"):
+                    tkinter.messagebox.showinfo("Alert", f"Successfully withdrawed ${amount}")
+                    UserPanel(self.AccNo)
+                elif(withdraw_check == "Insufficient Funds"):
+                    tkinter.messagebox.showinfo("Alert", "Insufficient Funds")
             elif(self.screen == "deposit"):
-                data.deposit(self.AccNo, int(self.dep_entry.get()))
-                tkinter.messagebox.showinfo("Alert", f"Successfully deposited ${self.dep_entry.get()}")
+                amount = int(self.dep_entry.get())
+                data.deposit(self.AccNo, amount)
+                tkinter.messagebox.showinfo("Alert", f"Successfully deposited ${amount}")
                 UserPanel(self.AccNo)
 
         
@@ -285,22 +290,33 @@ class atm:
 
                 case 3:
                     if(self.screen == "History"):
-                        date1 = ["25/12","26/12","27/12"]
-                        withdrawed = [3,4,6]
-                        plt.plot(date1,withdrawed, color = "r")
-                        plt.yticks(withdrawed)
+                        time = range(24)
+                        withdrawed = data.getWithdrawHistory(self.AccNo)
+                        plt.plot(time, withdrawed, color = "r", marker="o", markersize=6)
+                        plt.xlabel("Time (in hours)")
+                        plt.ylabel("Frequency")
+                        plt.title("Withdraw History")
+                        plt.xticks(time)
                         plt.show()
 
 
                 case 4:
-                    pass
+                    if(self.screen == "History"):
+                        time = range(24)
+                        deposited = data.getDepositHistory(self.AccNo)
+                        plt.plot(time, deposited, color = "b", marker="o", markersize=6)
+                        plt.xlabel("Time (in hours)")
+                        plt.ylabel("Frequency")
+                        plt.title("Deposit History")
+                        plt.xticks(time)
+                        plt.show()
 
                 case 5:
                     if(self.screen == "user"):
                         DestroyWidgets()
                         self.screen = "withdraw"
 
-                        self.balance_label = Label(TopFrame2Mid, text=f"Balance:$ {data.getBalance(self.AccNo)}", font=('arial', 10))
+                        self.balance_label = Label(TopFrame2Mid, text=f"Balance: ${data.getBalance(self.AccNo)}", font=('arial', 10))
 
                         self.withdraw_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.withdraw_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
@@ -319,7 +335,7 @@ class atm:
                         DestroyWidgets()
                         self.screen = "deposit"
                         
-                        self.balance_label = Label(TopFrame2Mid, text=f"Balance:$ {data.getBalance(self.AccNo)}", font=('arial', 10))
+                        self.balance_label = Label(TopFrame2Mid, text=f"Balance: ${data.getBalance(self.AccNo)}", font=('arial', 10))
 
                         self.dep_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.dep_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
@@ -379,7 +395,7 @@ class atm:
 #=======================CenterScreen(Widgets)===================================#
 
         # 400 x 275
-        self.img_atm_background = PhotoImage(file="resources/images/background.png")
+        self.img_atm_background = PhotoImage(file="resources/images/background3.png")
         self.atm_background = Label(TopFrame2Mid, image=self.img_atm_background)
         self.atm_background.grid(row=0, column=0)
 
