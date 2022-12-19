@@ -1,9 +1,8 @@
-import matplotlib.pyplot as plt
-import pandas as pd
-import tkinter.messagebox
 from tkinter import *
+import tkinter.messagebox
 import data
 import tools_GUI
+import matplotlib.pyplot as plt
 
 class atm:
     def __init__(self,root):
@@ -12,7 +11,8 @@ class atm:
         self.root.title(110 * blank_space + "ATM System")
         self.root.geometry('790x654+580+140')
         self.root.configure(background ='yellow')
-
+        
+        # list of entry widgets
         self.entryList = []
 
 #=================================Frame=========================================#
@@ -51,10 +51,6 @@ class atm:
                 self.AccNo_entry.destroy()
                 self.PIN_label.destroy()
                 self.PIN_entry.destroy()
-                try:
-                    self.PopUpLabel.destroy()
-                except:
-                    pass
             elif(self.screen == "register"):
                 self.AccNo_label.destroy()
                 self.AccNo_entry.destroy()
@@ -64,10 +60,6 @@ class atm:
                 self.AccName_entry.destroy()
                 self.PhNo_label.destroy()
                 self.PhNo_entry.destroy()
-                try:
-                    self.PopUpLabel.destroy()
-                except:
-                    pass
             elif(self.screen == "user"):
                 self.withdraw_label.destroy()
                 self.deposit_label.destroy()
@@ -92,8 +84,6 @@ class atm:
                 self.wd_label.destroy()
                 self.deposit_label.destroy()
 
-                
-                
         def start():
             DestroyWidgets()
             self.screen = "login or register"
@@ -105,24 +95,21 @@ class atm:
             self.register_label.place(x=15, y=85)
 
         def CurrentEntry():
+            # get the selected entry on screen
             widgetSelected = root.focus_get()
 
-
+            # return the entry which is selected
             for entry in self.entryList:
                 if(widgetSelected == entry):
                     return entry
-
-           
-            
-#============================Numbers============================================#
-
-        # numpad keys function
 
         def clear():
             try:
                 CurrentEntry().delete(0, END)
             except:
                 print("No entry selected")
+
+        # Num Key Function
         def insert(num):
             CurrentText = CurrentEntry().get()
 
@@ -158,33 +145,39 @@ class atm:
 
         def enter():
             if(self.screen == "login"):
+                # Store Info globally for this session
                 self.AccNo = int(str(self.AccNo_entry.get()).strip())
                 self.Pin = int(str(self.PIN_entry.get()).strip())
 
-                AccNol_check = tools_GUI.CheckInt(self.AccNo, digit=8)
-                Pinl_check = tools_GUI.CheckInt(self.Pin, digit=4)
+                # Check for "Int", "Digit Error", "Non Int"
+                AccNo_check = tools_GUI.CheckInt(self.AccNo, digit=8)
+                Pin_check = tools_GUI.CheckInt(self.Pin, digit=4)
 
-                if(AccNol_check == "Int" and Pinl_check == "Int"):
+                # Proceed if checks are passed
+                if(AccNo_check == "Int" and Pin_check == "Int"):
                     if(data.login(self.AccNo,self.Pin) == "Success"):
                         UserPanel(self.AccNo)
                     elif(data.login(self.AccNo,self.Pin) == "No Data"):
                         tkinter.messagebox.showwarning("Not Found", "No such account exists")
-                elif(AccNol_check == "Digit Error"):
+                elif(AccNo_check == "Digit Error"):
                     tkinter.messagebox.showwarning("Digit Error", "Enter an 8 digit account number")
-                elif(Pinl_check == "Digit Error"):
+                elif(Pin_check == "Digit Error"):
                     tkinter.messagebox.showwarning("Digit Error", "Enter an 4 digit pin number")
 
             elif(self.screen == "register"):
+                # Store Info globally for this session
                 self.AccNo = int(str(self.AccNo_entry.get()).strip())
                 self.Pin = int(str(self.PIN_entry.get()).strip())
                 self.Name = str(self.AccName_entry.get()).strip()
                 self.PhNo = int(str(self.PhNo_entry.get()).strip())
 
+                # Check for "Int", "Digit Error", "Non Int" and "STR", "Non STR"
                 AccNo_check = tools_GUI.CheckInt(self.AccNo, digit=8)
                 Pin_check = tools_GUI.CheckInt(self.Pin, digit=4)
                 AccName_check = tools_GUI.CheckSTR(self.Name)
                 PhNo_check = tools_GUI.CheckInt(self.PhNo, digit=10)
                     
+                # Proceed if checks are passed
                 if(AccNo_check == "Int" and Pin_check == "Int" and AccName_check == "STR" and PhNo_check == "Int"):
                     if(data.register(self.AccNo, self.Pin, self.Name, self.PhNo) == "Success"):
                         UserPanel(self.AccNo)
@@ -205,9 +198,11 @@ class atm:
                 self.cpo = int(self.cpo_entry.get())
                 self.cpn = int(self.cpn_entry.get())
 
+                # Check for "Int", "Digit Error", "Non Int"
                 oldP_check = tools_GUI.CheckInt(self.cpo, digit=4)
                 newP_check = tools_GUI.CheckInt(self.cpn, digit=4)
 
+                # Proceed if checks are passed
                 if(oldP_check == "Int" and newP_check == "Int"):
                     if(data.changePIN(self.AccNo, self.cpo, self.cpn)) == "Success":
                         UserPanel(self.AccNo)
@@ -221,13 +216,17 @@ class atm:
 
             elif(self.screen == "withdraw"):
                 amount = int(self.withdraw_entry.get())
+
+                # Check for "Success", "Insufficient Funds"
                 withdraw_check = data.withdraw(self.AccNo, amount)
                 
+                # Proceed if checks are passed
                 if(withdraw_check == "Success"):
                     tkinter.messagebox.showinfo("Alert", f"Successfully withdrawed ${amount}")
                     UserPanel(self.AccNo)
                 elif(withdraw_check == "Insufficient Funds"):
                     tkinter.messagebox.showinfo("Alert", "Insufficient Funds")
+
             elif(self.screen == "deposit"):
                 amount = int(self.dep_entry.get())
                 data.deposit(self.AccNo, amount)
@@ -237,7 +236,8 @@ class atm:
         
         def arrow(num):
             match(num):
-                case 1:      
+                case 1:
+                    # Arrow 1 : "login or register" => "login"
                     if(self.screen == "login or register"):
                         DestroyWidgets()
                         self.screen = "login"
@@ -249,7 +249,6 @@ class atm:
 
                         self.AccNo_label.place(x=15, y=15)
                         self.AccNo_entry.place(x=15, y=40)
-
                         self.PIN_label.place(x=15, y=85)
                         self.PIN_entry.place(x=15, y=110)
 
@@ -259,6 +258,7 @@ class atm:
                         pass
 
                 case 2:
+                    # Arrow 2 : "login or register" => "register"
                     if(self.screen == "login or register"):
                         DestroyWidgets()
                         self.screen = "register"
@@ -285,10 +285,9 @@ class atm:
                         self.entryList.append(self.PIN_entry)
                         self.entryList.append(self.AccName_entry)
                         self.entryList.append(self.PhNo_entry)
-                    if(self.screen == "user"):
-                        pass 
 
                 case 3:
+                    # Arrow 3 : "History" => Plot Withdraw History
                     if(self.screen == "History"):
                         time = range(24)
                         withdrawed = data.getWithdrawHistory(self.AccNo)
@@ -301,6 +300,7 @@ class atm:
 
 
                 case 4:
+                    # Arrow 4 : "History" => Plot Deposit History
                     if(self.screen == "History"):
                         time = range(24)
                         deposited = data.getDepositHistory(self.AccNo)
@@ -312,44 +312,41 @@ class atm:
                         plt.show()
 
                 case 5:
+                    # Arrow 5 : "user" => "withdraw"
                     if(self.screen == "user"):
                         DestroyWidgets()
                         self.screen = "withdraw"
 
                         self.balance_label = Label(TopFrame2Mid, text=f"Balance: ${data.getBalance(self.AccNo)}", font=('arial', 10))
+                        self.balance_label.place(x=5, y=5)
 
                         self.withdraw_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.withdraw_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
-
-                        self.balance_label.place(x=5, y=5)
 
                         self.withdraw_label.place(x=15, y=85)
                         self.withdraw_entry.place(x=15, y=110)
 
                         self.entryList.append(self.withdraw_entry)
-                    if(self.screen == "withdraw"):
-                        pass
 
                 case 6:
+                    # Arrow 6 : "user" => "deposit"
                     if(self.screen == "user"):
                         DestroyWidgets()
                         self.screen = "deposit"
                         
                         self.balance_label = Label(TopFrame2Mid, text=f"Balance: ${data.getBalance(self.AccNo)}", font=('arial', 10))
+                        self.balance_label.place(x=5, y=5)
 
                         self.dep_label = Label(TopFrame2Mid, text='Enter Amount :', font=('arial', 10, 'bold'))
                         self.dep_entry = Entry(TopFrame2Mid, font=('arial', 10, 'normal'))
-
-                        self.balance_label.place(x=5, y=5)
 
                         self.dep_label.place(x=15, y=85)
                         self.dep_entry.place(x=15, y=110)
 
                         self.entryList.append(self.dep_entry)
-                    if(self.screen == "deposit"):
-                        pass
 
                 case 7:
+                    # Arrow 7 : "user" => "History"
                     if(self.screen == "user"):
                         DestroyWidgets()
                         self.screen = "History"
@@ -362,8 +359,8 @@ class atm:
                         self.wd_label.place(x=15, y=155)
                         self.deposit_label.place(x=15, y=225)
 
-
                 case 8:
+                    # Arrow 8 : "user" => "changePIN"
                     if(self.screen == "user"):
                         DestroyWidgets()
                         self.screen = "changePIN"
@@ -382,14 +379,12 @@ class atm:
 
                         self.entryList.append(self.cpo_entry)
                         self.entryList.append(self.cpn_entry)
-                    if(self.screen == "changePIN"):
-                        pass
                     
 
 
 #===============================================================================#
 
-        # "welcome", "login or register", "login", "user", "register", "Withdraw"
+        # "welcome", "login or register", "login", "user", "register", "withdraw", "deposit", "History", "changePIN"
         self.screen = "welcome"
 
 #=======================CenterScreen(Widgets)===================================#
