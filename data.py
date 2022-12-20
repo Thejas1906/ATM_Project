@@ -1,5 +1,5 @@
 import pandas as pd
-import datetime
+from datetime import datetime
 
 def SaveMain():
     global df
@@ -30,8 +30,8 @@ def login(AccNo, Pin):
 
 def register(AccNo, Pin, Name, PhNo):
     if(AccNo not in df.index):
-        df.loc[AccNo] = [Pin, Name, PhNo, 0]
-        withdraw_df.loc[AccNo] = [[0 for i in range(24)]]
+        df.loc[AccNo] = [Pin, Name, PhNo, 2000]
+        withdraw_df.loc[AccNo] = [[0, 1], [0, 0]]
         deposit_df.loc[AccNo] = [[0 for i in range(24)]]
         
         SaveMain()
@@ -51,15 +51,17 @@ def getBalance(AccNo):
     return df.loc[AccNo, "Balance"]
 
 def withdraw(AccNo, amount):
-    if(getBalance(AccNo) >= amount):
+    if(getBalance(AccNo) < amount):
+        return "Insufficient Funds"
+    elif(getBalance(AccNo) - 2000 < amount):
+        return "Min 2000"
+    elif(getBalance(AccNo) >= amount):
         df.loc[AccNo, "Balance"] -= amount
 
         SaveMain()
-        setWithdrawHistory(AccNo)    
+        setWithdrawHistory(AccNo, amount)    
 
         return "Success"
-    elif(getBalance(AccNo) < amount):
-        return "Insufficient Funds"
 
 def deposit(AccNo, amount):
     df.loc[AccNo, "Balance"] += amount
@@ -67,7 +69,7 @@ def deposit(AccNo, amount):
     SaveMain()
     setDespoitHistory(AccNo)
 
-def changePIN(AccNo, oldPIN, newPIN):
+def changePin(AccNo, oldPIN, newPIN):
     if(oldPIN == df.loc[AccNo][0]):
         df.loc[AccNo, "Pin"] = newPIN
         SaveMain()
@@ -76,27 +78,45 @@ def changePIN(AccNo, oldPIN, newPIN):
         return "Incorrect PIN"
 
 def getWithdrawHistory(AccNo):
-    _tempList = withdraw_df.loc[AccNo, "frequency"]
-    _tempList = [int(i) for i in _tempList[1:-1].split(', ')]
-    return _tempList
+    time = withdraw_df.loc[AccNo, "time"]
+    amount = withdraw_df.loc[AccNo, "amount"]
 
-def setWithdrawHistory(AccNo):
-    _tempList = getWithdrawHistory(AccNo)
-    currentHour = datetime.datetime.now().hour
-    _tempList[currentHour] += 1
-    withdraw_df.loc[AccNo, "frequency"] = _tempList
+    time = [int(i) for i in time[1:-1].split(', ')]
+    amount = [int(i) for i in amount[1:-1].split(', ')]
+    print("time", time)
+    print("amount", amount)
+
+    return [time, amount]
+
+def setWithdrawHistory(AccNo, amount):
+    data = getWithdrawHistory(AccNo)
+    currentTime = datetime.now().hour*60 + datetime.now().minute
+
+    data[0].append(currentTime)
+    data[1].append(amount)
+
+    withdraw_df.loc[AccNo] = data
 
     SaveWithdraw()
 
 def getDepositHistory(AccNo):
-    _tempList = deposit_df.loc[AccNo, "frequency"]
-    _tempList = [int(i) for i in _tempList[1:-1].split(', ')]
-    return _tempList
+    time = deposit_df.loc[AccNo, "time"]
+    amount = deposit_df.loc[AccNo, "amount"]
 
-def setDespoitHistory(AccNo):
-    _tempList = getDepositHistory(AccNo)
-    currentHour = datetime.datetime.now().hour
-    _tempList[currentHour] += 1
-    deposit_df.loc[AccNo, "frequency"] = _tempList
+    time = [int(i) for i in time[1:-1].split(', ')]
+    amount = [int(i) for i in amount[1:-1].split(', ')]
+    print("time", time)
+    print("amount", amount)
+
+    return [time, amount]
+
+def setDespoitHistory(AccNo, amount):
+    data = getDepositHistory(AccNo)
+    currentTime = datetime.now().hour*60 + datetime.now().minute
+
+    data[0].append(currentTime)
+    data[1].append(amount)
+
+    withdraw_df.loc[AccNo] = data
 
     SaveDeposit()
