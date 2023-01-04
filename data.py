@@ -67,7 +67,7 @@ def deposit(AccNo, amount):
     df.loc[AccNo, "Balance"] += amount
 
     SaveMain()
-    setDespoitHistory(AccNo)
+    setDespoitHistory(AccNo, amount)
 
 def changePin(AccNo, oldPIN, newPIN):
     if(oldPIN == df.loc[AccNo][0]):
