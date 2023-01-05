@@ -32,7 +32,7 @@ def register(AccNo, Pin, Name, PhNo):
     if(AccNo not in df.index):
         df.loc[AccNo] = [Pin, Name, PhNo, 2000]
         withdraw_df.loc[AccNo] = [[0, 1], [0, 0]]
-        deposit_df.loc[AccNo] = [[0 for i in range(24)]]
+        deposit_df.loc[AccNo] = [[0, 1], [0, 0]]
         
         SaveMain()
         SaveWithdraw()
@@ -117,6 +117,6 @@ def setDespoitHistory(AccNo, amount):
     data[0].append(currentTime)
     data[1].append(amount)
 
-    withdraw_df.loc[AccNo] = data
+    deposit_df.loc[AccNo] = data
 
     SaveDeposit()
